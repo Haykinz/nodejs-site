@@ -1,0 +1,6 @@
+forever.log
+out.log
+err.log
+*.gz
+*.xls?
+*.xlsx?

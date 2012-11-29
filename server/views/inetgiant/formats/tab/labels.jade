@@ -1,0 +1,21 @@
+div.tabbable
+	ul.nav.nav-tabs
+		- for (var key in data)
+			- if (key == 0)
+				- active = "active"
+			- else
+				- active = ""
+			- favicon = (data[key].urlSource) ? "favicon-" + data[key].urlSource.replace(".", "-") : ""
+			li(class="#{active}")
+				a(href="##{data[key].keywordAggregatorId}", data-toggle="tab", class="#{favicon}")
+					- if (data[key].urlSource)
+						= ( data[key].urlSource.toLowerCase().match(/inetginat/ig)) ? data[key].urlSource : __('Partner')
+						- if (data[key].itemsCount > 0)
+							= " (" + data[key].itemsCount + ")"
+
+					- else if (data[key].title)
+						= data[key].title
+						- if (data[key].itemsCount > 0)
+							= " (" + data[key].itemsCount + ")"
+					- else
+						| Tab-#{key}

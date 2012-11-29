@@ -1,0 +1,102 @@
+- if (server.city && server.city.slug.toLowerCase() == 'www')
+	- www = true
+	- displayMode = "regions"
+	- region = server.domain.countryCode.toUpperCase()
+	- stateCode = false
+- else
+	- www = false
+	- region = server.city.state.countryCode.toUpperCase() + "-" + server.city.state.stateCode.toUpperCase()
+	- stateCode = server.city.state.stateCode
+	- displayMode = "markers"
+
+- _data  = []
+- _slugs = []
+
+each item in data
+	- if (item && item.byState && item.byCity && item.byState)
+		- elementId = item._id
+
+		- if (www)
+			- item.byState.data.unshift([__('State'), __('Ads count')])
+			- _data   = item.byState.data
+			- __data  = JSON.stringify(_data, null, "\t")
+			- _slugs  = item.byState.dataSlugs
+			- __slugs = JSON.stringify(item.byState.dataSlugs, null, "\t")
+
+
+		- else
+			each state, i in item.byCity.dataStateCodes
+				- if (state == stateCode)
+					- _data.push(item.byCity.data[i])
+					- _slugs.push(item.byCity.dataSlugs[i])
+
+			- _data.unshift([__('City'), __('Ads count')])
+			- __data  = JSON.stringify(_data, null, "\t")
+			- __slugs = JSON.stringify(_slugs, null, "\t")
+
+		- if (__data && __slugs)
+
+			script(type='text/javascript')
+				google.load('visualization', '1', {'packages': ['geochart']});
+
+				var drawMarkersMap = function () {
+					var data = google.visualization.arrayToDataTable(!{__data});
+					var options = {
+						region: '#{region}',
+						displayMode: '#{displayMode}',
+						datalessRegionColor: "F5F5F5",
+						colorAxis: {colors: ['orange', 'red']},
+						keepAspectRatio: true,
+						resolution: "provinces",
+						magnifyingGlass: {enable: false, zoomFactor: 7.0},
+						enableRegionInteractivity: true
+					};
+
+					var chart = new google.visualization.GeoChart(document.getElementById('#{elementId}'));
+					chart.draw(data, options);
+
+					google.visualization.events.addListener(chart, 'select', function (eventData) {
+						var selection = chart.getSelection();
+						var message;
+						var __slugs = !{__slugs}
+						for (var i = 0; i < selection.length; i++) {
+							var item = selection[i];
+							if (item.row != null && item.column != null) {
+								message += '{row:' + item.row + ',column:' + item.column + '}';
+							} else if (item.row != null) {
+								message += '{row:' + item.row + '}';
+							} else if (item.column != null) {
+								message += '{column:' + item.column + '}';
+							}
+						}
+						if (message == '') { message = 'nothing';}
+
+						var city = __slugs[selection[0].row].toString().toLowerCase();
+						var location = "http://" + city + ".#{server.host}/#{server.path}";
+						window.location = location;
+					});
+				};
+				google.setOnLoadCallback(drawMarkersMap);
+
+			- if (www)
+				div(id="#{elementId}").geo-chart
+			- else
+				div(id="#{elementId}")
+
+			div.row-fluid.mt10.map
+				each item, i in _data
+					- if (i > 0 && i <= 12)
+						- if (www)
+							div.span4
+								- ulr = "http://" + _slugs[(i-1)] + "." + server.host + "/" + server.path
+								!= __('<a href="%s" target="_self">%s (%d)</a>', ulr, item[0], item[1])
+						- else
+							div.span4
+								- ulr = "http://" + _slugs[(i-1)] + "." + server.host + "/" + server.path
+								- _city = item[0].split(",")
+								// - _city = _city[0] + ", " + stateCode.toUpperCase()
+								- _city = _city[0]
+								!= __('<a href="%s" target="_self">%s (%d)</a>', ulr, _city, item[1])
+
+		- else
+			| #{__('There are no ads at any States')}

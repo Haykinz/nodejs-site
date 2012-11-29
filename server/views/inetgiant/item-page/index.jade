@@ -1,0 +1,261 @@
+extends ../layout
+
+block content
+	include adsense-inc.html
+	.row-fluid
+		ul.breadcrumb
+			each _breadcrumb, i in content.breadcrumbs
+				li(class= (i + 1 == content.breadcrumbs.length && content.breadcrumbs.length > 1) ? 'active' : '' )
+					- if (i + 1 == content.breadcrumbs.length && content.breadcrumbs.length > 1)
+						= _breadcrumb.name
+					- else 
+						a(href='#{server.protocol}://#{_breadcrumb.slug}')= _breadcrumb.name
+						span.divider /
+
+		.hero.addetails
+			.row-fluid
+				.span8.content
+					hgroup.mb20.title
+						h1
+							= page.title
+							small 
+								| $
+								= content.price
+						//- h4.keywords-block-subtitle.noti Right now there is only one used Special Cars
+					include adsense-top.html
+					p= content.descriptionHTML
+					- if ((content.descriptionTEXT.split(" ")).length > 100)
+						include adsense-bottom.html
+
+
+					- if (content.images.length)
+						.images
+							- images = []
+							each image, i in content.images
+								- if (content.owner == 'inetgiant.com')
+									- if ( content.trueOwner == "detroittrading.net" && content.attributes.model_vin)
+										- arr = content.images[i].split('/')
+										- image = arr[arr.length - 1]
+										- images.push("http://img.leaddelivery.net/images/" + content.attributes.model_vin + "/Thumbnail/" + image + ".jpg?s=0000-2346")
+									- else
+										- images.push("http://images.inetgiant.com/thumbnail/" + content.idOld + "/" + content.images[i])
+								- else
+									- images.push(content.images[0])
+
+							- if (images.length)
+								- if (images[0].match(/Thumbnail/))
+									- imageMain = images[0].replace('Thumbnail', 'Main')
+
+								- else if (images[0].match(/thumbnail/))
+									- imageMain = images[0].replace('thumbnail', 'original')
+
+								- else 
+									- imageMain = images[0]
+
+								img.thumbnail.large(src= imageMain)
+								ul.thumbnails
+									- if (images.length > 1)
+										each image, i in images
+											- if (i > 0)
+												- imageMain = ''
+												- if (image.match(/Thumbnail/))
+													- imageMain = image.replace('Thumbnail', 'Main')
+
+												- else if (image.match(/thumbnail/))
+													- imageMain = image.replace('thumbnail', 'original')
+
+												- else
+													- imageMain = image
+
+												li
+													img.thumbnail(alt= content.title, src= image, data-src= imageMain, title= content.title)
+
+				.span4.aside
+					script(type="text/javascript")
+						window.___gcfg = {lang: 'en'};
+						(function() {
+							var po = document.createElement("script");
+							po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+							var s = document.getElementsByTagName("script")[0];
+							s.parentNode.insertBefore(po, s);
+						})();
+					.g-plus(data-href="https://plus.google.com/110304999753429893717?rel=publisher", data-width="350", data-height="131", data-theme="light")
+					.safetytips
+						hgroup.mb20
+							h3 Stay Safe on iNetGiant:
+						p Avoid fraud by meeting all sellers in-person to pay for items.
+						p Never send or wire money to people you do not know or trust.
+						p iNetGiant Classifieds does not participate in any transaction or offer any payment services.
+					.profile
+						.hero
+							.block
+								.avatar
+									- thumbnail = (content.userId && content.userId.hasOwnProperty('userPhoto')) ? content.userId.userPhoto : "http://static.inetgiant.com/images/default_avatar.png"
+									img.thumbnail(src=thumbnail)
+								- if (content.userId && content.userId.hasOwnProperty('name'))
+									.user
+										strong= __("Posted by:") + " "
+										| #{content.userId.name}
+										br
+										| #{content.userId.address}
+										br
+										- if (content.city && content.state)
+											| #{content.city.name}, #{content.state.name}, 
+											= content.state.stateCode.toUpperCase()
+								.date
+									strong= __("Date Posted:") + " "											
+									| #{content.dateInsert.toDateString()}
+								//- .viewprofile
+								//- 	a(href="http://www.inetgiant.com/user/profile/1103884") View Profile
+
+								- if (content.trueOwner && content.trueOwner == "detroittrading.net" && content.phoneExt && content.phoneExt != "")
+									.phone
+										br
+										strong= __("Phone")
+										|:
+										|&nbsp;(800) 855-213-5002
+										|&nbsp;ext.&nbsp;
+										= content.phoneExt
+
+							
+
+							script(type="text/javascript")
+								$(document).ready(function() {										
+									
+									$('#formreply').click(function(){
+
+										$('.contactform .control-group').removeClass('error');
+										$('.contactform .control-group .help-inline').remove();
+
+										var validation = true;
+										
+										var formemail = $('#formemail').val();		
+										console.log(formemail.length );
+										if(formemail.length == 0){
+											$('.contactform .control-group.formemail').addClass('error');
+											($('#formemail').parents('.controls')).append($("<div class=\"help-inline\" style=\"display:block\">Email should not be empty</div>"));
+											validation = false;
+										}
+										if (!formemail.match('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$') && validation) {
+											$('.contactform .control-group.formemail').addClass('error');
+											($('#formemail').parents('.controls')).append($("<div class=\"help-inline\" style=\"display:block\">Enter email</div>"));
+											validation = false;
+										}
+										
+										var formmessage = $('#formmessage').val();
+										if (formmessage.length < 30) {
+											$('.contactform .control-group.formmessage').addClass('error');
+											($('#formmessage').parents('.controls')).append($("<div class=\"help-inline\" style=\"display:block\">Content should be minimum 30 characters</div>"));
+											validation = false;
+										}
+										
+										var formcopy =$('#formcopy').is(':checked');
+										var formid = $('#formid').val();
+										var formadid = $('#formadid').val();
+										
+										if(validation){
+											$.post('http://www.inetgiant.com/user/send-message', {email:formemail, message:formmessage, copy:formcopy, formid:formid, adid:formadid }, function(result){
+												if(parseInt(result) == 1){														
+													$('#contactform').before($("<div class=\"alert fade in alert-success\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">×</button> Email has been send </div>"));
+												} else {
+													$('#contactform').before($("<div class=\"alert fade in alert-error\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">×</button> Error try again </div>"));
+												}
+											})
+										}
+
+									})
+
+									$('#formreset').click(function(){
+										$('.contactform .control-group').removeClass('error');
+										$('.contactform .control-group .help-inline').remove();
+									});
+
+								})
+							form.contactform
+								//- <div class="control-group error">
+								//- <label class="control-label" for="inputError">Input with error</label>
+								//- <div class="controls">
+								//- <input type="text" id="inputError">
+								//- <span class="help-inline">Please correct the error</span>
+								//- </div>
+								//- </div>
+
+
+								input(type="hidden", id="formid", value="R56n8SXZFb", name="formid")
+								input(type="hidden", id="formadid", value=content.idOld, name="formadid")
+								legend
+								.control-group.formemail
+									label.control-label(for="formemail") Your email
+									.controls
+										input(type="text", id="formemail", name="email")
+										//- span.help-inline
+								
+								.control-group.formmessage
+									label.control-label(for="formmessage") Message
+									.controls												
+										textarea(id="formmessage", name="message")
+										//- span.help-inline										
+								.control-group.formcheckbox
+									label(class="checkbox")
+										input(type="checkbox")
+										| Send me a copy of email
+								.form-actions
+									button.btn.btn-primary(type="button", id="formreply") Reply
+									button.btn(type="reset", id="formreset") Cancel
+					include adsense-aside.html
+				//- .similar
+				//- 	.tabbable
+				//- 		ul.nav.nav-tabs	
+				//- 			li.active
+				//- 				a(href="#similaritems", data-toggle="tab") Similar items
+				//- 			li
+				//- 				a(href="#similaryear", data-toggle="tab") Similar year
+				//- 			li
+				//- 				a(href="#similarprice", data-toggle="tab") Similar price
+				//- 	.tab-content
+				//- 		.tab-pane.active(id="similaritems")
+				//- 			ul
+				//- 				li
+									
+				//- 					a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131")
+				//- 						img.thumbnail(alt="2002 Van Chrysler Town and Country LX 4 Wheel Drive Mint Cond for 10 Yr Old Vehicle", src="http://images.inetgiant.com/categoty/31426131/1348251651-2002_Chrysler_TownCountry_50225_Image1.jpg")
+				//- 					h4
+				//- 						a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131") 2002 Van Chrysler Town and Country
+				//- 						= " "
+				//- 						span.price $ 4900.00
+				//- 				li
+				//- 					a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131")
+				//- 						img.thumbnail(alt="2002 Van Chrysler Town and Country LX 4 Wheel Drive Mint Cond for 10 Yr Old Vehicle", src="http://images.inetgiant.com/categoty/31426131/1348251651-2002_Chrysler_TownCountry_50225_Image1.jpg")
+				//- 					h4
+				//- 						a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131") 2002 Van Chrysler Town and Country
+				//- 						= " " 
+				//- 						span.price $ 4900.00
+				//- 				li
+				//- 					a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131")
+				//- 						img.thumbnail(alt="2002 Van Chrysler Town and Country LX 4 Wheel Drive Mint Cond for 10 Yr Old Vehicle", src="http://images.inetgiant.com/categoty/31426131/1348251651-2002_Chrysler_TownCountry_50225_Image1.jpg")
+				//- 					h4
+				//- 						a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131") 2002 Van Chrysler Town and Country
+				//- 						= " " 
+				//- 						span.price $ 4900.00
+				//- 				li
+				//- 					a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131")
+				//- 						img.thumbnail(alt="2002 Van Chrysler Town and Country LX 4 Wheel Drive Mint Cond for 10 Yr Old Vehicle", src="http://images.inetgiant.com/categoty/31426131/1348251651-2002_Chrysler_TownCountry_50225_Image1.jpg")
+				//- 					h4
+				//- 						a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131") 2002 Van Chrysler Town and Country
+				//- 						= " " 
+				//- 						span.price $ 4900.00
+				//- 				li
+				//- 					a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131")
+				//- 						img.thumbnail(alt="2002 Van Chrysler Town and Country LX 4 Wheel Drive Mint Cond for 10 Yr Old Vehicle", src="http://images.inetgiant.com/categoty/31426131/1348251651-2002_Chrysler_TownCountry_50225_Image1.jpg")
+				//- 					h4
+				//- 						a(href="http://short-hills.inetgiant.com/automobiles/autos-for-sale/2002-van-chrysler-town-and-country-31426131") 2002 Van Chrysler Town and Country
+				//- 						= " " 
+				//- 						span.price $ 4900.00
+				//- 		.tab-pane(id="similaryear") Similar year content
+				//- 		.tab-pane(id="similarprice") Similar price content
+		include adsense-footer.html
+
+					
+
+
+

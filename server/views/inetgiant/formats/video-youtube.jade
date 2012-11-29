@@ -1,0 +1,8 @@
+each item in data
+	- if (item.videos[0] || item.videos.length > 1)
+		- length = item.videos.length
+		- key = (Math.random() * item.videos.length | 0) + 1
+		div(style="argin-left: 10px;")
+			iframe(width="360", height="202", frameborder="0", allowfullscreen, src="http://www.youtube.com/embed/#{item.videos[key]}")
+	- else
+		p #{__('Video temporarily is not available')}

@@ -1,0 +1,4 @@
+#!/bin/bash
+# sudo forever restart -a -l forever.log -o out.log -e err.log  app.js --cluster
+
+sudo NODE_ENV=production forever restart -a -l forever.log -o out.log -e err.log app.js

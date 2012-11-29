@@ -1,0 +1,116 @@
+
+extends ../../layout
+
+block content
+  div.row-fluid
+    ul.breadcrumb
+      each _breadcrumb, i in content.breadcrumbs
+        li(class= (i + 1 == content.breadcrumbs.length && content.breadcrumbs.length > 1) ? 'active' : '' )
+          - if (i + 1 == content.breadcrumbs.length && content.breadcrumbs.length > 1)
+            = _breadcrumb.name
+          - else 
+            a(href='#{server.protocol}://#{_breadcrumb.slug}')= _breadcrumb.name
+            span.divider /
+                
+    div.hero
+      div.row-fluid
+        div.row-fluid
+          hgroup.mb20.span10
+            h1
+              = page.title
+            h4.keywords-block-subtitle.noti
+              = page.subTitle
+              - if (content.lastUpdate)
+                | &nbsp; (
+                = __( "Last update: %s",  content.lastUpdate)
+                |)
+            - if (content[99])
+                != content[99].dataCompiled
+
+
+        div.row-fluid
+          div.span4
+            div.mb20
+              - if (content[1])
+                != content[1].dataCompiled
+            div.mb20
+              - if (content[4])
+                != content[4].dataCompiled
+            div.mb20
+              - if (content[8])
+                != content[8].dataCompiled
+            div.mb20
+              - if (content[10])
+                != content[10].dataCompiled
+
+
+          div.span5
+            div.mb20
+              - if (content[2])
+                != content[2].dataCompiled
+            div.mb20
+              - if (content[5])
+                != content[5].dataCompiled
+            div.mb20
+              - if (content[7])
+                != content[7].dataCompiled
+            div.mb20
+              - if (content[11])
+                != content[11].dataCompiled                
+
+          div.span3
+            div.mb20
+              - if (content[3])
+                != content[3].dataCompiled
+            div.mb20
+              - if (content[6])
+                != content[6].dataCompiled
+            div.mb20
+              - if (content[9])
+                != content[9].dataCompiled
+            div.mb20
+              - if (content[12])
+                != content[12].dataCompiled                
+
+        //- div.row-fluid
+        //-   div.span6
+
+
+
+
+        //- div.row-fluid.mt20
+        //-   div.span12
+
+        div#toitems.row-fluid.mt20
+          - if (content[77])
+            != content[77].dataCompiled
+
+          - if (content.pager && content.pager.pages > 1)
+            //- include ../../formats/pager
+          //- Address 10
+
+             //- div.row-fluid
+             //-   div(style="text-align: center;").mt20
+             //-     button.btn.btn-primary.mr10 
+             //-       strong More results
+             //-     button.btn.btn-primary.mr10 
+             //-       strong +50
+             //-     button.btn.btn-primary
+             //-       strong +100
+  - if (content.itemsCount)
+    div.scrollpanel
+      div.container      
+        a(href="#") #{__("Scroll down or click here to view all %d %s on iNetGiant.com", content.itemsCount, page.title)}
+    script(type="text/javascript")
+      $(document).ready(function() {      
+        $('.scrollpanel').click(function(){
+          $('html, body').animate({ scrollTop: $("#toitems").offset().top - $('#header').height() - 20 }, 500);
+        });
+        $(window).scroll(function () {
+          if ($(this).scrollTop() + $(window).height() > $("#toitems").offset().top) {
+            $('.scrollpanel').fadeOut();
+          } else {
+            $('.scrollpanel').fadeIn();
+          }
+        });
+      });

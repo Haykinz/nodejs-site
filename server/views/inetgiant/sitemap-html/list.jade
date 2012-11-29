@@ -1,0 +1,13 @@
+!!! 5
+html
+	head		
+		title List items
+		meta(name="robots", content="noindex, follow, noarchive")
+		meta(charset="utf-8")
+	body
+		ul
+			- for (var i = 0; i < content.count; i++) {
+				- var page = i * 100;
+				li
+					a(href="/htmlsitemap/automobiles/list-items-" + content.listPage + "/items-" + page)= "list items " + i + " - " + page
+			- }

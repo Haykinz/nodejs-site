@@ -1,0 +1,21 @@
+head
+	// = page.title
+	title= page.title.charAt(0).toUpperCase() + page.title.slice(1)
+	meta(name="description", content="#{page.description}")
+	meta(name="viewport", content="width=device-width, initial-scale=1.0")
+	link(rel="icon", type="image/png", href="http://static.inetgiant.com/images/favicon.png")
+	link(rel="stylesheet", href="/css/frutty-mix.css")
+
+
+	script(src='/socket.io/socket.io.js')
+	// script(src='/lib/requirejs/require.js', data-main="/main.js")
+	script(src="/_js/frutty-mix.js")
+	// script(src="/js/connect.js")
+
+	- if (page.inIndex === false || page.inIndex == null || !page.inIndex)
+		meta(name="robots", content="noindex")
+	- else
+		meta(name="robots", content="index,follow")
+
+	- if (server.domain.googleAnalyticsAccount)
+		include counters/google-analytics

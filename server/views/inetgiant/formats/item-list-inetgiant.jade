@@ -1,0 +1,56 @@
+table.table
+  each item in data
+    - if (item.owner.match(/inetgiant/gi))
+      tr
+        td.span12
+          div(item-id="#{item._id}").row-fluid.span12
+            div.span2
+              - if (item.city && item.state)
+                - citySlug = item.city.slug
+                - cityName = item.city.name + ", " + item.state.name
+              - else
+                - citySlug = item.city.slug
+                - cityName = ""
+              // - adLink   = server.address + "/" + item.slug
+              - adLink   = server.protocol + "://" + citySlug + "." + server.host + "/" + item.slug
+
+
+              a(href="#{adLink}").thumbnail
+                - if (item.images && item.images[0])
+                  - if ( (item.trueOwner == "detroittrading.net" || item.images[0].match(/leaddelivery/gi)) && item.attributes.model_vin)
+                    - arr = item.images[0].split('/')
+                    - image = arr[arr.length - 1]
+                    img(src="http://img.leaddelivery.net/images/#{item.attributes.model_vin}/Preview/#{image}.jpg?s=0000-2346")
+
+                  - else
+                    img(src="http://images.inetgiant.com/categoty/#{item.idOld}/#{item.images[0]}")
+                      
+                - else
+                  img(src="http://static.inetgiant.com/images/category-automobiles.jpg")
+                  //- http://images.inetgiant.com/[thumbnail,categoty,large,original,thumbnail]/[idOld]/[file.name]
+
+            
+            div.span10
+              div.row-fluid
+                div.span10
+                  a(href="#{adLink}")
+                    h4.mb10 #{item.title}
+                div.span2
+                  - if (item.price && item.price > 0)
+                    span.price 
+                      | $ #{item.price}
+                  - else
+                    span.price
+                      | #{__('Please contact for price')}
+
+              p.description
+                - if(item.vipStatus)
+                  | #{item.descriptionHTML}
+                - else
+                  | #{item.descriptionTEXT}
+              
+              p.meta
+                 | #{item.dateInsert.toDateString()}
+                 - if (cityName)
+                    |, in 
+                    a(href='#{server.protocol}://#{citySlug}.#{server.host}/#{server.path}') #{cityName}

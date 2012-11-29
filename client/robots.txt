@@ -1,0 +1,8 @@
+User-agent: bingbot
+Crawl-delay: 1
+
+User-agent: Mediapartners-Google* 
+Disallow:
+
+User-agent: *
+Allow: /

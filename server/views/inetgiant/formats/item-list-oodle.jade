@@ -1,0 +1,44 @@
+table.table
+  each item in data
+    - if (item.owner.match(/oodle/gi))
+      tr
+        td.span12
+          div(item-id="#{item._id}").row-fluid.span12
+            div.span2
+              - if (item.city && item.state)
+                - citySlug = item.city.slug
+                - cityName = item.city.name + ", " + item.state.name
+                - stateName = item.state.name
+              - else
+                - citySlug = ""
+                - cityName = ""
+                - stateName = ""
+
+
+              a(href!=item.slug, rel="nofollow").thumbnail
+                - if (item.images[0])
+                  img(src="#{item.images[0]}")
+                - else
+                  img(src="http://static.inetgiant.com/images/category-automobiles.jpg")
+                  //- http://images.inetgiant.com/[thumbnail,categoty,large,original,thumbnail]/[idOld]/[file.name]
+
+            
+            div.span10
+              div.row-fluid
+                div.span10
+                  a(href!=item.slug, rel="nofollow")
+                    h4.mb10 #{item.title}
+                div.span2
+                  span.price $ #{item.price}
+            
+              p.description
+                - if(item.vipStatus)
+                  | #{item.descriptionHTML}
+                - else
+                  | #{item.descriptionTEXT}
+              
+              p.meta
+                 | #{item.dateInsert.toDateString()}
+                 - if (cityName)
+                    |, in 
+                    a(href='http://#{citySlug}.#{server.host}/#{server.path}') #{cityName}

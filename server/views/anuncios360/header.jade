@@ -1,0 +1,26 @@
+head
+  title
+    | Anuncios gratis Latinoamérica, compra y venta de productos nuevos o de segunda mano y mucho más.  
+  meta(name="description", content="#{page.description}")
+  meta(name="keywords", content="#{page.keywords}")
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  link(rel="icon", type="image/png", href="img/anuncios360-favicon.ico")
+  link(rel="stylesheet", href="/css/frutty-mix.css")
+
+
+  // script(src='/socket.io/socket.io.js')
+  script(src="/js/frutty-mix.js")
+
+
+  // - if (server.city && server.city.slug == "www")
+    //- meta(name="robots", content="index")
+  //- - else
+  //- meta(name="robots", content="noindex")
+  meta(name="google-site-verification", content="1pZLlP3DO_1QsjVwsHbi88rpFQrI3MrbG9PG0mLI9BM")
+
+  - if (server.domain.googleAnalyticsAccount)
+    include counters/google-analytics
+
+
+
+

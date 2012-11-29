@@ -1,0 +1,38 @@
+div#header.navbar.navbar-fixed-top
+	div.navbar-inner
+		div.container
+			a.brand(href='http://www.#{server.domain.name}', title='iNetGiant')
+				img(src='http://static.inetgiant.com/images/logo.png')
+			div(class="#{server.domain.countryCode} slogan") Simple, Local, free
+
+			div.location
+				span
+					a(href="/") Free Classifieds 
+					| in 
+				strong
+					a(href="http://www.#{server.domain.name}") USA 
+
+			form(action="/search", method="get").navbar-search.pull-left
+				div.control-group
+					div.controls
+						div(class="input-prepend input-append")
+							span.add-on 
+								i(class="icon-search size-large")
+							input(type="text", id="appendedPrependedInput", class="span2 input", placeholder="#{__('What are you looking for?')}", name="sPattern", required="required")
+							input(type="submit", class="btn", value="search")
+
+			div.pull-right
+				div
+					ul.nav.nav-login
+						li
+							a(href="http://www.#{server.domain.name}/user/register")
+								i.icon-pencil
+								| Sign Up
+						li
+							a(href="http://www.#{server.domain.name}/user/login") 
+								i.icon-user
+								| Sign in
+			div.nav-post-an-add
+				a(href="http://www.#{server.domain.name}/item/new") Post An Ad
+
+

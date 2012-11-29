@@ -1,0 +1,44 @@
+each item in data
+	- rating = item.value
+	- votes  = item.votes
+	- if (rating && votes)
+		- _content = {}
+		- _content.rating = {}
+		- maxRating = 10
+		- _content.rating.full  	= (rating / votes) / 100 * maxRating;
+		- _content.rating.full  	= _content.rating.full.toFixed(1); // from 5.6676767 -> 5.7
+		- _content.rating.rest  	= (_content.rating.full % 1);
+		- _content.rating.round 	= ~~_content.rating.full;
+		- _content.rating.max 	    = maxRating;
+		- _content.rating.votes 	= votes;
+
+		- if (_content.rating && _content.rating.full > 0 && _content.rating.round > 0)
+			- len = Array( ~~(_content.rating.full * 5 / _content.rating.max) )
+			- s = 1
+
+			div#rating
+				div.hreview-aggregate
+					each i in len
+						i(class="star-#{s}").icon-star
+						- s++
+					- if (_content.rating.round % 2) 
+						i(class="star-#{s}").icon-star-half
+					span.rating
+						span.value
+							= (_content.rating.full == _content.rating.round) ? _content.rating.round : _content.rating.full
+						|/
+						span.best
+							= _content.rating.max
+						br
+						span.text 
+							= __(' based on ')
+
+					span.votes
+						= __n('one vote', '%d votes', _content.rating.votes)
+					span.inline-text
+						| &nbsp;
+						= __('for')
+						| <br />
+					span.item
+						span.fn
+							= keyword.nameShort ? keyword.nameShort : keyword.name

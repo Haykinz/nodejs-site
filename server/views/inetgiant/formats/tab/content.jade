@@ -1,0 +1,8 @@
+div.tab-content
+	- for (var key in data)
+		- if (key == 0)
+			- active = "active"
+		- else
+			- active = ""
+		div(id="#{data[key].keywordAggregatorId}", class="#{active}").tab-pane
+			!= data[key].dataTAB

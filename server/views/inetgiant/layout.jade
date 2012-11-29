@@ -1,0 +1,64 @@
+- page = {}
+- page.www = false
+- page.inIndex = false
+
+- if (content.type == 'keyword' )
+	- page.title = content.name
+	- page.keywordName = content.name
+	- page.subTitle = __n('There is only one listing of %%s', 'There are %d listings of %%s', content.itemsCount, content.nameShort ? content.nameShort : content.name)
+
+	- page.description = __n('There is %d used %%s', 'There are %d used %%s', content.itemsCount, content.name)
+
+	- if (server.city && server.city.name)
+		- _location = city.name + ", " + city.state.stateCode.toUpperCase()
+		- page.title    += __(" in %s", _location)
+		- page.subTitle += __(" in %s", _location)
+		- page.description += __(" in %s right now.", _location)
+	- else
+		- page.www = true
+		- page.description += __(" right now.")
+
+	- if (content.rating && content.rating.full > 0 && content.rating.max > 0)
+		- page.description += __(" Rating: %s/%s", content.rating.full, content.rating.max)
+
+	- if (content.lastReview)
+		- page.description += __(" Last Review: %s", content.lastReview)
+
+	- if (content.inIndex && page.www && content.itemsCount > 2)
+		- page.inIndex = true
+
+- else if (content.type == 'item' )
+	- page.title = content.title
+
+	- if (server.city && server.city.name)
+		// - _location = city.name + ", " + city.state.stateCode.toUpperCase()
+		// - page.title    += __(" in %s", _location)
+		// - page.subTitle += __(" in %s", _location)
+		// - page.description += __(" in %s right now.", _location)
+	- else
+		- page.www = true
+		// - page.description += __(" right now.")
+
+	- if (content.inIndex)
+		- page.inIndex = true		
+		
+
+!!! 5
+html
+	include header
+	body(data-spy="scroll", data-target=".subnav", data-offset="50")
+		include navbar
+		
+		div.container
+			div.row-fluid
+				//-	div.span12
+				//-	ul.breadcrumb
+				//-		li
+				//-			a(href="#") USA
+				//-			span.divider /
+				//-		li
+				//-			a(href="#") Automobiles
+				//-			span.divider /
+			div.row-fluid
+				block content
+		include footer

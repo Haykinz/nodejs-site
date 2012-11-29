@@ -1,0 +1,29 @@
+
+extends ../../layout
+
+block content
+  div.span12
+    div.hero
+      div.row-fluid
+        div.row-fluid
+          hgroup
+            h1
+              | Miles de anuncios próximamente aquí...
+            h4.keywords-block-subtitle.noti
+              | El portal más completo de anuncios clasificados GRATIS de Latinoamérica
+            - if (content[99])
+                != content[99].dataCompiled
+
+        div.row-fluid
+          div.span8
+          div.span4
+            h3.mb10 Síguenos en:
+        div.row-fluid
+          div.span8
+            p(style="text-indent: 25px;")
+              | Anuncios360.com será tu comunidad online de anuncios gratis, donde podrás publicar y encontrar lo que buscas. Será tu mejor opcion para publicar avisos clasificados 100% gratis compra y venta de carros, barcos, motos y vehículos de ocasión, renta y compra de inmuebles, ofertas de todo tipo de productos, desde muebles hasta joyería nuevos o de segunda mano y mucho más. Vender un producto o servicio, publicar y buscar anuncios nunca fue tan simple, fácil y rápido.  Anuncios360 te ayudará a que tu anuncio sea visto por el  mayor número de usuarios.
+          div.span4
+            div.mb10
+              include google-plus.html
+            div.mb10
+              include fb.html

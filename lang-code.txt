@@ -1,0 +1,163 @@
+af		af		Afrikaans
+am		am		Amharic
+ar-ae	ar		Arabic - United Arab Emirates
+ar-bh	ar		Arabic - Bahrain
+ar-dz	ar		Arabic - Algeria
+ar-eg	ar		Arabic - Egypt
+ar-iq	ar		Arabic - Iraq
+ar-jo	ar		Arabic - Jordan
+ar-kw	ar		Arabic - Kuwait
+ar-lb	ar		Arabic - Lebanon
+ar-ly	ar		Arabic - Libya
+ar-ma	ar		Arabic - Morocco
+ar-om	ar		Arabic - Oman
+ar-qa	ar		Arabic - Qatar
+ar-sa	ar		Arabic - Saudi Arabia
+ar-sy	ar		Arabic - Syria
+ar-tn	ar		Arabic - Tunisia
+ar-ye	ar		Arabic - Yemen
+as		as		Assamese
+az-az	az		Azeri - Cyrillic
+az-az	az		Azeri - Latin
+be		be		Belarusian
+bg		bg		Bulgarian
+bn		bn		Bengali - Bangladesh
+bn		bn		Bengali - India
+bo		bo		Tibetan
+bs		bs		Bosnian
+ca		ca		Catalan
+cs		cs		Czech
+cy		cy		Welsh
+da		da		Danish
+de-at	de		German - Austria
+de-ch	de		German - Switzerland
+de-de	de		German - Germany
+de-li	de		German - Liechtenstein
+de-lu	de		German - Luxembourg
+dv		dv		Divehi; Dhivehi; Maldivian
+el		el		Greek
+en-au	en		English - Australia
+en-bz	en		English - Belize
+en-ca	en		English - Canada
+en-cb	en		English - Caribbean
+en-gb	en		English - Great Britain
+en-ie	en		English - Ireland
+en-in	en		English - India
+en-jm	en		English - Jamaica
+en-nz	en		English - New Zealand
+en-ph	en		English - Phillippines
+en-tt	en		English - Trinidad
+en-us	en		English - United States
+en-za	en		English - Southern Africa
+es-ar	es		Spanish - Argentina
+es-bo	es		Spanish - Bolivia
+es-cl	es		Spanish - Chile
+es-co	es		Spanish - Colombia
+es-cr	es		Spanish - Costa Rica
+es-do	es		Spanish - Dominican Republic
+es-ec	es		Spanish - Ecuador
+es-es	es		Spanish - Spain (Traditional)
+es-gt	es		Spanish - Guatemala
+es-hn	es		Spanish - Honduras
+es-mx	es		Spanish - Mexico
+es-ni	es		Spanish - Nicaragua
+es-pa	es		Spanish - Panama
+es-pe	es		Spanish - Peru
+es-pr	es		Spanish - Puerto Rico
+es-py	es		Spanish - Paraguay
+es-sv	es		Spanish - El Salvador
+es-uy	es		Spanish - Uruguay
+es-ve	es		Spanish - Venezuela
+et		et		Estonian
+eu		eu		Basque
+fa		fa		Farsi - Persian
+fi		fi		Finnish
+fo		fo		Faroese
+fr-be	fr		French - Belgium
+fr-ca	fr		French - Canada
+fr-ch	fr		French - Switzerland
+fr-fr	fr		French - France
+fr-lu	fr		French - Luxembourg
+gd		gd		Gaelic - Scotland
+gd-ie	gd		Gaelic - Ireland
+gn		gn		Guarani - Paraguay
+gu		gu		Gujarati
+he		he		Hebrew
+hi		hi		Hindi
+hr		hr		Croatian
+hu		hu		Hungarian
+hy		hy		Armenian
+id		id		Indonesian
+is		is		Icelandic
+it-ch	it		Italian - Switzerland
+it-it	it		Italian - Italy
+ja		ja		Japanese
+kk		kk		Kazakh
+km		km		Khmer
+kn		kn		Kannada
+ko		ko		Korean
+ks		ks		Kashmiri
+la		la		Latin
+lo		lo		Lao
+lt		lt		Lithuanian
+lv		lv		Latvian
+mi		mi		Maori
+mk		mk		FYRO Macedonia
+ml		ml		Malayalam
+mn		mn		Mongolian
+mn		mn		Mongolian
+mr		mr		Marathi
+ms-bn	ms		Malay - Brunei
+ms-my	ms		Malay - Malaysia
+mt		mt		Maltese
+my		my		Burmese
+ne		ne		Nepali
+nl-be	nl		Dutch - Belgium
+nl-nl	nl		Dutch - Netherlands
+no-no	nb		Norwegian - Bokml
+no-no	nn		Norwegian - Nynorsk
+or		or		Oriya
+pa		pa		Punjabi
+pl		pl		Polish
+pt-br	pt		Portuguese - Brazil
+pt-pt	pt		Portuguese - Portugal
+rm		rm		Raeto-Romance
+ro		ro		Romanian - Romania
+ro-mo	ro		Romanian - Moldova
+ru		ru		Russian
+ru-mo	ru		Russian - Moldova
+sa		sa		Sanskrit
+sb		sb		Sorbian
+sd		sd		Sindhi
+si		si		Sinhala; Sinhalese
+sk		sk		Slovak
+sl		sl		Slovenian
+so		so		Somali
+sq		sq		Albanian
+sr-sp	sr		Serbian - Cyrillic
+sr-sp	sr		Serbian - Latin
+sv-fi	sv		Swedish - Finland
+sv-se	sv		Swedish - Sweden
+sw		sw		Swahili
+ta		ta		Tamil
+te		te		Telugu
+tg		tg		Tajik
+th		th		Thai
+tk		tk		Turkmen
+tn		tn		Setsuana
+tr		tr		Turkish
+ts		ts		Tsonga
+tt		tt		Tatar
+uk		uk		Ukrainian
+ur		ur		Urdu
+uz-uz	uz		Uzbek - Cyrillic
+uz-uz	uz		Uzbek - Latin
+vi		vi		Vietnamese
+xh		xh		Xhosa
+yi		yi		Yiddish
+zh-cn	zh		Chinese - China
+zh-hk	zh		Chinese - Hong Kong SAR
+zh-mo	zh		Chinese - Macau SAR
+zh-sg	zh		Chinese - Singapore
+zh-tw	zh		Chinese - Taiwan
+zu		zu		Zulu

@@ -1,0 +1,37 @@
+- if (data.length > 1) //- IF items in specification more than 1
+	div.tabbable
+		ul.nav.nav-tabs.specification-nav
+			each item, key in data
+				- if (key == 0)
+					- active = "active"
+				- else
+					- active = ""
+				li(class="#{active}")
+					- if (item.model_trim) 
+						- title = item.model_trim
+
+					- else if (item.owner) 
+						- title = item.owner.charAt(0).toUpperCase() + item.owner.slice(1);
+
+					- else if (item.pet_breed) 
+						- title = item.pet_breed
+
+					- else
+						- title = __('Basic')
+						
+					a(href="#spec-#{item._id}", data-toggle="tab") #{title}
+	div.tab-content
+		each item, key in data
+			- if (key == 0)
+				- active = "active"
+			- else
+				- active = ""
+			div(id="spec-#{item._id}", class="#{active}").tab-pane
+				table.table
+					each field, index in item
+						include table-specification-content
+
+- else //- ELSE only 1 specification
+	table.table
+		each field, index in data[0]
+			include table-specification-content

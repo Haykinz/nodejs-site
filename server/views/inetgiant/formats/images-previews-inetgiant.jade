@@ -1,0 +1,52 @@
+ul.thumbnails
+  - counter = 1
+  - count   = 0
+  - imagesLimit = 7
+  
+  each item, i in data
+    - if (item.images && item.images[0] && counter <= imagesLimit)
+      - count++
+
+  each item, i in data
+    - if (item.images && item.images[0] && counter <= imagesLimit)
+      - if (counter == 1)
+        - imageSize = "large"
+        - if (count == 1) 
+          - span = "span12"
+        - else
+          - span = "span12"
+      - else
+        - span = "span2"
+        - imageSize = "categoty"
+      li(item-id="#{item._id}", class="#{span}")
+        - if (item.owner == "inetgiant.com")
+          - if (item.city)
+            - rel = ""
+            - citySlug = item.city.slug
+            - cityName = item.city.name
+            // - adLink   = "http://" + citySlug + ".inetgiant.com/" + item.slug
+          - else
+            - citySlug = ""
+            - cityName = ""
+            // - adLink   = "http://inetgiant.com/" + item.slug
+
+          - if ( (item.trueOwner == "detroittrading.net" || item.images[0].match(/leaddelivery/gi)) && item.attributes.model_vin)
+            - arr     = item.images[0].split('/')
+            - image   = arr[arr.length - 1]
+            - imgSrc  = "http://img.leaddelivery.net/images/" + item.attributes.model_vin + "/Main/" + image + ".jpg?s=0000-2346"
+          - else
+            - imgSrc   = "http://images.inetgiant.com/" + imageSize + "/" + item.idOld + "/" + item.images[0]
+
+        - else if (item.owner == "oodle.com")
+          - rel = "nofollow"
+          - adLink = item.slug
+          - citySlug = ""
+          - cityName = ""
+          - imgSrc   = item.images[0]
+
+        - adLink   = server.protocol + "://" + citySlug + "." + server.host + "/" + item.slug
+        - description = item.descriptionTEXT.truncate(300, false, true)
+
+        a(href="#{adLink}",target="_blank", popover="popover", rel="#{rel}", data-title="#{item.title}", data-content="<img alt='#{item.title}' align='left' style='padding: 0px 8px 0px 0px;' src='#{imgSrc}'> #{description}").thumbnail.image-preview
+          img(alt="#{item.title}", src="#{imgSrc}")
+      - counter++

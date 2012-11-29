@@ -1,0 +1,28 @@
+- page = {}
+- page.www = false
+- page.title = content.name
+- page.keywordName = content.name
+
+- page.description	= "El portal más completo de anuncios clasificados GRATIS de América Latina. Vender un producto o servicio, publicar y buscar anuncios nunca fue tan simple, fácil y rápido. Miles de productos  nuevos o usados, compra y venta de inmuebles y  mucho más."
+- page.keywords 	= "Anuncios América Latina , anuncios gratis, vender, comprar, compra, venta, segunda mano, clasificados, productos usados, inmuebles, productos nuevos o usados"
+
+!!! 5
+html
+	include header
+	body(data-spy="scroll", data-target=".subnav", data-offset="50")
+
+		include navbar
+		
+		div.container
+			div.row-fluid
+				//-	div.span12
+				//-	ul.breadcrumb
+				//-		li
+				//-			a(href="#") USA
+				//-			span.divider /
+				//-		li
+				//-			a(href="#") Automobiles
+				//-			span.divider /
+			div.row-fluid
+				block content
+		include footer

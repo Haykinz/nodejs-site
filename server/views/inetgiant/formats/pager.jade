@@ -1,0 +1,66 @@
+//- rows = this->numItems;      
+//-   pagination['total'] = ceil(rows/this->itemsPerPage);
+
+- limit = 9
+
+- pagination = {}
+
+- pagination['total'] = content.pager.pages
+
+- if (pagination['total'] > 1)
+	- pagination['current'] = (content.pager.page == 0) ? 1 : content.pager.page
+	- pagination['link'] = server.path
+  
+	- pagination['left'] 		= 0
+	- pagination['right'] 		= 0
+	- pagination['start'] 		= 1
+	- pagination['stop'] 		= pagination['total']
+	- pagination['previous'] 	= (pagination['current'] == pagination['start']) ? 0 : (pagination['current'] - 1)
+	- pagination['next'] 		= (pagination['current'] == pagination['total']) ? 0 : (pagination['current'] + 1)
+
+	- if(pagination['total'] > limit && pagination['current'] > 4) 
+		- pagination['left'] = 1
+
+	- if(pagination['total'] > limit && pagination['current'] + 5 < pagination['total']) 
+		- pagination['right'] = 1
+
+	- if(pagination['total'] > limit) 
+		- if(pagination['current'] < 5) 
+			- pagination['stop'] = limit
+		- if(pagination['current'] + 4 < pagination['total'] && pagination['current'] > 4)
+			- pagination['start'] = pagination['current'] - 4 
+			- pagination['stop'] = pagination['current'] + 4
+		- if(pagination['current'] + 5 > pagination['total']) 
+			- pagination['start'] = pagination['total'] - limit
+
+
+// != JSON.stringify(pagination)
+
+ul.pager
+	- if (pagination['previous'] && pagination['current'] > limit - pagination['current'] + 1)
+		li
+			a(href="#{server.address}/#{server.path}/page-#{pagination['previous']}") &larr; Newer
+
+	- if (pagination['previous'] && pagination['current'] > limit - pagination['current'] + 2)
+		li
+			a(href="#{server.address}/#{server.path}/page-1") 1
+			- if(pagination['start'] > 2)
+				|&nbsp;...&nbsp;
+
+	- for (var i = pagination['start']; i <= pagination['stop']; i++)
+		- if (i == content.pager.page)
+			li.disabled
+				a= i
+		- else
+			li
+				a(href="#{server.address}/#{server.path}/page-#{i}")= i
+
+	- if (pagination['current'] < pagination['total'] -1 && pagination['total'] > limit)
+		li
+			|&nbsp;...&nbsp;
+			a(href="#{server.address}/#{server.path}/page-#{pagination['total']}")= pagination['total']
+
+
+	- if (pagination['next'] && pagination['next'] < pagination['total'] && pagination['total'] > limit)
+		li
+			a(href="#{server.address}/#{server.path}/page-#{pagination['next']}") Older &rarr;

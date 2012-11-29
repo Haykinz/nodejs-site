@@ -1,0 +1,19 @@
+ul.unstyled
+	each item in data
+		- if (item.description && item.title)
+			- title = item.title
+			- description = item.description.truncate(500, true, true)
+			- favicon = (item.urlSource) ? "favicon-" + item.urlSource.urlParts().domain + item.urlSource.urlParts().domainextension.replace('.', '-') : ""
+			li(popover="popover", title="#{title}", data-content= (description ? description : item.description.truncate(1000, false, true))).list-item
+				//- div(class="favicon").list-title
+				div.list-title
+					h4 #{item.title.truncate(20)}
+					- if (item.author)
+						span= __('by') + "&nbsp;"
+						span.cap= item.author
+					- else
+						| &nbsp;
+						
+				- if (item.description)
+					p.list-content
+						= (description ? description : item.description.truncate(500, false, true))

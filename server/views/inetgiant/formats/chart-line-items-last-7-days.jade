@@ -1,0 +1,114 @@
+- if (server.city && server.city.slug.toLowerCase() == 'www')
+	- www = true
+	- region = server.domain.countryCode.toUpperCase()
+	- stateCode = false
+	- city = false
+
+- else
+	- www = false
+	- region = server.city.state.countryCode.toUpperCase() + "-" + server.city.state.stateCode.toUpperCase()
+	- stateCode = server.city.state.stateCode
+	- city = server.city
+
+- _data = Array()
+- weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+- today = new Date()
+- today = today.getDay()
+- _day  = ''
+
+each item in data
+	- if (item && item.byState && item.byCity)
+		- elementId = item._id
+
+		- _records = []
+		- if (www)
+			- _records = item.byState.data
+		- else
+			//- p= item.byCity.data
+			each _city, i in item.byCity.data
+				- if (_city[0] == city.slug)
+					- _records.push([_city[1], _city[2]])
+
+		
+
+
+		- k = 0
+		- knowList = []
+		- each day, i in weekdays
+			- j = today + i + 1
+			- if (j > weekdays.length - 1)
+				- j = k
+				- k++
+
+			- _day = weekdays[j]
+			- if (j == today)
+				- _day = 'today'
+
+			- else if (j == today - 1)
+				- _day = 'yesterday'
+
+			each _date in _records
+				- if (knowList.indexOf(weekdays[j]) == -1)
+					- if (_date[0] == weekdays[j])
+						- _data.push([__(_day), _date[1]])
+						- knowList.push(weekdays[j])
+
+			- if (knowList.indexOf(weekdays[j]) == -1)
+				- _data.push([__(_day), 0])
+				- knowList.push(weekdays[j])
+
+		- _data.unshift([__('Week day'), __('Ads added')])
+
+		- if (_records.length > 0)
+
+			div(id="#{elementId}").line-chart
+			div.mb20
+				each item, i in _data
+					- if (i > 0)
+						- if (item[1] > 0)
+							div
+								- if (item[0] == "yesterday" || item[0] == "today")
+									!= __n('<strong>%s</strong> listing was added <strong>%%s</strong>', '<strong>%s</strong> listings were added <strong>%%s</strong>', item[1], __(item[0]))
+								- else
+									!= __n('<strong>%s</strong> listing was added on <strong>%%s</strong>', '<strong>%s</strong> listings were added on <strong>%%s</strong>', item[1], __(item[0]))
+
+			- _data = JSON.stringify(_data, null, "\t")
+
+			script(type='text/javascript')
+
+				google.load('visualization', '1', {'packages': ['corechart']});
+
+				var drawLineChart = function () {
+					var data = google.visualization.arrayToDataTable(!{_data});
+					var options = {
+						legend: {position: 'bottom'}
+					};
+
+					var chart = new google.visualization.AreaChart(document.getElementById('#{elementId}'));
+					chart.draw(data, options);
+
+					google.visualization.events.addListener(chart, 'select', function (eventData) {
+						var selection = chart.getSelection();
+						var message;
+						for (var i = 0; i < selection.length; i++) {
+							var item = selection[i];
+							if (item.row != null && item.column != null) {
+								message += '{row:' + item.row + ',column:' + item.column + '}';
+							} else if (item.row != null) {
+								message += '{row:' + item.row + '}';
+							} else if (item.column != null) {
+								message += '{column:' + item.column + '}';
+							}
+						}
+						if (message == '') {
+							message = 'nothing';
+						}
+					});
+				};
+				google.setOnLoadCallback(drawLineChart);
+				
+		- else
+			| #{__('There are no new ads for the last 7 days')}
+	- else
+		| #{__('There are no new ads for the last 7 days')}
+

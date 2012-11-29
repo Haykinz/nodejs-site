@@ -1,0 +1,11 @@
+!!! 5
+html
+	head		
+		title List ads
+		meta(name="robots", content="noindex, follow, noarchive")
+		meta(charset="utf-8")
+	body
+		ul
+			each item in content.items
+				li
+					a(href=item.slug)= item.title

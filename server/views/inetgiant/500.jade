@@ -1,0 +1,10 @@
+
+// note that we extend a different
+// layout with jade for 4xx & 5xx
+// responses
+
+extends error
+
+block content
+	if settings['verbose errors']
+		pre= error.stack

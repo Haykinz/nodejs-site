@@ -1,0 +1,6 @@
+
+extends error
+
+block content
+	if settings['verbose errors']
+		pre= error.stack

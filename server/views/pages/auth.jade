@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+	div.span12
+		div.hero
+			div.row-fluid
+				form(method="post",  enctype="application/x-www-form-urlencoded").form-horizontal
+					div.control-group
+						label(for="inputEmail").control-label Email
+						div.controls
+							input(type="text", id="inputEmail", placeholder="Email", name="email")
+					div.control-group
+						label(for="inputPassword").control-label Password
+						div.controls
+							input(type="password", id="inputPassword", placeholder="Password", name="password")
+					div.control-group
+						div.controls
+							label.checkbox Remember me
+								input(type="checkbox", name="remember") 
+							button(type="submit").btn Sign in

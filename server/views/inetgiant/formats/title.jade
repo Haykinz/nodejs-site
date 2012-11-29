@@ -1,0 +1,128 @@
+- if (data.title != '' && data.title) 
+	- title = ''
+	- icon = ''
+	- subTitle = ''
+	- addClass = ''
+	hgroup.mb10
+		- if (data.style == 'item-list-inetgiant')
+			- icon = 'icon-list-alt'
+			- title = data.title
+			// - subTitle = __("Click on tabs to see all latest %s listings", keyword.nameShort ? keyword.nameShort : keyword.name )
+
+		- if (data.style == 'item-list-oodle')
+			- icon = 'icon-list-alt'
+			- title = data.title
+
+		- if (data.style == 'images-previews-inetgiant')
+			- icon = 'icon-picture'
+			- title = data.title
+
+			// - counter = 0
+			// each item in data.data
+			// 	- if (item.images[0])
+			// 		- counter++
+			// - if (counter > 7) 
+			// 	- counter = 7
+			// - subTitle = __n("Take a look on %%s's last photo", "Take a look on %%s's last %d photos", counter, keyword.nameShort ? keyword.nameShort : keyword.name)
+			- subTitle = data.data[0].title ? data.data[0].title : data.data[1].title
+
+		- else if (data.style == 'chart-geo-items-by-city')
+			- icon = 'icon-globe'
+			- _counter = 0
+			- if (server.city.slug == 'www')
+				//- = data.title
+				- title  = "Map"
+				- _state = ''
+				- _slug  = ''
+				- if (data.data && data.data[0] && data.data[0].byState && data.data[0].byState.data && data.data[0].byState.data.length > 0)
+					- key = (Math.random() * data.data[0].byState.data.length | 0) + 1
+					- if (data.data[0].byState.data[key] && data.data[0].byState.data[key][0])
+						- _state = data.data[0].byState.data[key][0]
+						- _state = data.data[0].byState.data[key][0]
+						- _slug  = data.data[0].byState.dataSlugs[key]
+					- else 
+						- if (data.data[0].byState.data[0] && data.data[0].byState.data[0][0])
+							- _state = data.data[0].byState.data[0][0]
+							- _slug  = data.data[0].byState.dataSlugs[0]
+
+					- if (_slug != '')
+						- _slug = "http://" + _slug + "." + server.host + "/" + server.path
+					- subTitle = __n("%%s is currently for sale in <a href='%%s'>%%s</a>", "%%s is currently for sale in %d states including <a href='%%s'>%%s</a>, pick a State", data.data[0].byState.data.length, keyword.nameShort ? keyword.nameShort : keyword.name, _slug, __(_state))
+
+			- else
+				// = data.title + " " + __('in') + " " +server.city.state.name
+				- title  = "Map of active listings by City " + __('in') + " " +server.city.state.name
+				- _data           = data.data[0].byCity.data
+				- _dataStateCodes = data.data[0].byCity.dataStateCodes
+				each record, i in _dataStateCodes
+					- if (record == server.city.state.stateCode)
+						- _counter += _data[i][1]
+				- if (_counter > 0)
+					- subTitle = __n("There is %d %%s for sale in %%s", "There are %d %%s for sale in %%s", _counter, keyword.nameShort ? keyword.nameShort : keyword.name, __(server.city.state.name))
+
+
+		- else if (data.style == 'chart-pie-items-by-state')
+			- icon = 'icon-adjust'
+			- if (server.city.slug == 'www')
+				// = data.title
+				- title  = "Current listings by State"
+			- else
+				// = data.title + " " + __('in') + " " +server.city.state.name
+				- title  = "Current listings by City " + __('in') + " " +server.city.state.name
+			//- - subTitle = "Current listings by percentage"
+
+
+
+		- else if (data.style == 'chart-line-items-last-7-days')
+			- icon = 'icon-bar-chart'
+			- title = data.title
+			- _counter = 0
+			- if (server.city.slug == 'www')
+				- _data = data.data[0].byState.data
+				each record in _data
+					- if (record[1])
+						- _counter += record[1]
+				- if (_counter > 0)
+					- subTitle = __n("There is 1 new listing in the last 7 days", "There are %d new listings in the last 7 days", _counter)
+			- else
+				- _data = data.data[0].byCity.data
+				each record in _data
+					- if (record[0] == server.city.slug)
+						- _counter += record[2]
+				- if (_counter > 0)
+					- subTitle = __n("There is %s new listing in the last 7 days at %%s", "There are %d new listings in the last 7 days at %%s", _counter, server.city.name + ", " + server.city.state.stateCode)
+
+
+		- else if (data.style == 'table-specification')
+			- icon = 'icon-cogs'
+			- title = data.title
+			// - subTitle = __n("Take a look at %%s specification", "Choose you own %%s from %d different specifications", data.data.length, keyword.nameShort ? keyword.nameShort : keyword.name)
+
+		- else if (data.style == 'video-youtube')
+			- icon = 'icon-facetime-video'
+			- title = data.title
+			//- data.data[0]['videos'].length
+			// - subTitle = __("There is a video of %s", keyword.nameShort ? keyword.nameShort : keyword.name)
+
+		- else if (data.style == 'list-reviews')
+			- icon = 'icon-comments-alt'
+			- title = data.title
+			// - subTitle = __("What piople think about %s at:", keyword.nameShort ? keyword.nameShort : keyword.name)
+
+		- else if (data.style == 'list-news')
+			- icon = 'icon-bullhorn'
+			- title = data.title
+			- subTitle = __("Latest news about %s", keyword.nameShort ? keyword.nameShort : keyword.name)
+
+
+		- if (subTitle == '')
+			- addClass = 'up-to-top'
+
+		h3(class="#{addClass}").keywords-block-title
+			i(class="#{icon}")
+			= title
+
+
+		- if (subTitle != '')
+			h4.keywords-block-subtitle
+				!= subTitle

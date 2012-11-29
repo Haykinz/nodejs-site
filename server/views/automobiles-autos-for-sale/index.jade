@@ -1,0 +1,55 @@
+
+extends ../layout
+
+block content
+  div.span12
+    div.hero
+      div.row-fluid
+        div.row-fluid
+          hgroup.mb20
+            h1
+              = page.title
+            h4.keywords-block-subtitle.noti
+              = page.subTitle
+            - if (content[99])
+                != content[99].dataCompiled
+        div.row-fluid
+          div.span6
+            div.mb20
+              | Choose your next vehicle from our extensive selection, including everything from simple sedans to flashy sports cars
+            - if (content[1])
+              != content[1].dataCompiled
+
+
+          div.span6
+            - if (content[2])
+              != content[2].dataCompiled
+
+        div.row-fluid
+          div.span6
+            - if (content[3])
+              != content[3].dataCompiled
+
+          div.span6
+            - if (content[4])
+              != content[4].dataCompiled
+
+        div.row-fluid.mt20
+          div.span12
+        div.row-fluid.mt20
+          div.span12
+            - if (content[10])
+              != content[10].dataCompiled
+
+            - if (content.pager && content.pager.pages > 1)
+              include ../formats/pager
+
+           //- div.row-fluid
+           //-   div(style="text-align: center;").mt20
+           //-     button.btn.btn-primary.mr10 
+           //-       strong More results
+           //-     button.btn.btn-primary.mr10 
+           //-       strong +50
+           //-     button.btn.btn-primary
+           //-       strong +100
+           //-  
